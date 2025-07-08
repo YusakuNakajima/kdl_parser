@@ -19,7 +19,7 @@ def treeFromParam(param):
     :param param: Parameter name, ``str``
     """
 
-    return treeFromUrdfModel(urdf.URDF.from_parameter_server())
+    return treeFromUrdfModel(urdf.URDF.from_parameter_server(param))
 
 def treeFromString(xml):
     """
@@ -50,7 +50,9 @@ def _toKdlInertia(i):
 
 def _toKdlJoint(jnt):
 
-    fixed = lambda j,F: kdl.Joint(j.name, kdl.Joint.None)
+    fixed = lambda j,F: kdl.Joint(
+        j.name,
+        getattr(kdl.Joint, 'Fixed') if hasattr(kdl.Joint, 'Fixed') else getattr(kdl.Joint, 'None'))
     rotational = lambda j,F: kdl.Joint(j.name, F.p, F.M * kdl.Vector(*j.axis), kdl.Joint.RotAxis)
     translational = lambda j,F: kdl.Joint(j.name, F.p, F.M * kdl.Vector(*j.axis), kdl.Joint.TransAxis)
 
@@ -122,5 +124,5 @@ def treeFromUrdfModel(robot_model, quiet=False):
         if not _add_children_to_tree(robot_model, robot_model.link_map[child], tree):
             ok = False
             break
-  
+
     return (ok, tree)
