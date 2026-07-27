@@ -19,7 +19,8 @@
   <url type="repository">https://github.com/ros2/kdl_parser</url>
   <url type="bugtracker">https://github.com/ros2/kdl_parser/issues</url>
 
-  <buildtool_depend>ament_python</buildtool_depend>
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <buildtool_depend>ament_cmake_python</buildtool_depend>
 
   <depend>python_orocos_kdl_vendor</depend>
   <depend>urdf</depend>
@@ -30,6 +31,6 @@
   <test_depend>python3-pytest</test_depend>
 
   <export>
-    <build_type>ament_python</build_type>
+    <build_type>ament_cmake</build_type>
   </export>
 </package>
